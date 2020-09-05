@@ -1,6 +1,7 @@
 import json
 import datetime
 import itertools
+from utility import read_json, write_json
 
 def get_schedule_list_2d():
     """
@@ -80,25 +81,6 @@ def format_data(obj):
                 schedule = cut_modifier(val['name'])
                 new_obj[schedule].append([start, end])
     return new_obj
-
-
-def read_json(name='../data/data.json'):
-    """
-    read the data from a json file and decode them
-    """
-    with open(name, 'r') as mfile:
-        data = mfile.read()
-    # parse file
-    obj = json.loads(data)
-    return obj
-
-
-def write_json(data, name='../data/data_format.json'):
-    """
-    write the formatted json data inside a file
-    """
-    with open(name, 'w') as mfile:
-        json.dump(data, mfile)
 
 
 def main():
