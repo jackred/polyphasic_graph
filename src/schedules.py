@@ -8,11 +8,12 @@ tri_core = ['TC1', 'TC2', 'Triphasic']
 experimental = ['QC0', 'Experimental']
 mono = ['Mono']
 random = ['Random']
-modifiers = ['shortened', 'extended', 'flipped', 'modified', 'recovery', 'normal']
-    
+modifiers = ['shortened', 'extended', 'flipped', 'modified', 'recovery',
+             'normal']
+
 
 def get_modifiers_list():
-    return  {mod: [] for mod in modifiers}
+    return {mod: [] for mod in modifiers}
 
 
 def get_schedule_list_2d():
@@ -26,6 +27,7 @@ def get_schedule_list_2d():
         random
     ]))
 
+
 def get_schedule_dict():
     """
     return a dictionary. Schedma:
@@ -33,3 +35,13 @@ def get_schedule_dict():
     """
     tmp_list = get_schedule_list_2d()
     return {sch: get_modifiers_list() for sch in tmp_list}
+
+
+def cut_modifier(schedule_name):
+    """
+    cut the modifiers in the name, keeping only the schedule
+    """
+    tmp = schedule_name.split('-')
+    if len(tmp) == 1:
+        tmp.append('normal')
+    return tmp

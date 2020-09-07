@@ -1,10 +1,12 @@
 import requests
-from utility import read_json, write_json
+from io_utility import read_json, write_json
+
 
 def get_json():
-    config = read_json("../config.json")        
+    config = read_json("../config.json")
     res = requests.get(config['url']).json()
     return res
+
 
 if __name__ == '__main__':
     data = get_json()
