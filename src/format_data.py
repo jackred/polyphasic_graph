@@ -78,8 +78,9 @@ def format_data(obj):
             else:
                 end = histo[i+1]['setAt']
                 start = val['setAt']
+                adapted = val['adapted']
                 schedule = cut_modifier(val['name'])
-                new_obj[schedule].append([start, end])
+                new_obj[schedule].append([start, end, adapted])
     return new_obj
 
 
