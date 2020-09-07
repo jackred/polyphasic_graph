@@ -1,35 +1,7 @@
 import json
 import datetime
-import itertools
 from utility import read_json, write_json
-
-def get_schedule_list_2d():
-    """
-    generate a list of list with the following format
-    [[schedule name, schedule name, ...], [schedule name, ...], ...]
-    each sub list being a type of sleep
-    """
-    nap_only = ['Uberman', 'Dymaxion', 'Tesla', 'SPAMAYL', 'Naptation']
-    everyman = ['E2', 'E3', 'E4', 'E5', 'SEVAMAYL', 'Trimaxion']
-    biphasic = ['E1', 'Segmented', 'Siesta', 'BiphasicX']
-    dual_core = ['Bimaxion', 'DC1', 'DC2', 'DC3', 'DC4']
-    tri_core = ['TC1', 'TC2', 'Triphasic']
-    experimental = ['QC0', 'Experimental']
-    mono = ['Mono']
-    random = ['Random']
-    return list(itertools.chain.from_iterable([
-        nap_only, everyman, biphasic, dual_core, tri_core, mono, experimental,
-        random
-    ]))
-
-
-def get_schedule_dict():
-    """
-    return a dictionary. Schedma:
-     {"schedule name": []}
-    """
-    tmp_list = get_schedule_list_2d()
-    return {sch: [] for sch in tmp_list}
+from schedules import get_schedule_dict
 
 
 def iso_to_datetime(iso_date):
@@ -59,7 +31,10 @@ def cut_modifier(schedule_name):
     """
     cut the modifiers in the name, keeping only the schedule
     """
-    return schedule_name.split('-')[0]
+    tmp = schedule_name.split('-')
+    if len(tmp) == 1:
+        tmp.append('normal')
+    return tmp
 
 
 def format_data(obj):
@@ -79,8 +54,8 @@ def format_data(obj):
                 end = histo[i+1]['setAt']
                 start = val['setAt']
                 adapted = val['adapted']
-                schedule = cut_modifier(val['name'])
-                new_obj[schedule].append([start, end, adapted])
+                schedule, modifier = cut_modifier(val['name'])
+                new_obj[schedule][modifier].append([start, end, adapted])
     return new_obj
 
 
