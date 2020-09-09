@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from date_utility import get_now_string, iso_to_datetime, range_date
-from schedules import get_schedule_dict, nap_only
+from schedules import get_schedule_dict, is_nap_only
 from io_utility import read_json, write_json
 
 NAP_ONLY_LIMIT = 172800  # 48h
@@ -38,7 +38,7 @@ def make_range_array(data, start_date='2017-05-07T00:15:38.541Z',
     res = get_schedule_dict(lambda: [0] * delta)
     if delta >= 2:
         for schedule in data:
-            is_nap_only = schedule in nap_only
+            is_NO = is_nap_only(schedule)
             for modifier in data[schedule]:
                 tmp_array = data[schedule][modifier]
                 i = 0
@@ -53,7 +53,7 @@ def make_range_array(data, start_date='2017-05-07T00:15:38.541Z',
                     delta_sec = delta_attempt.total_seconds()
                     valid_schedule = (delta_sec > SCHEDULE_LIMIT
                                       or (delta_sec > NAP_ONLY_LIMIT
-                                          and is_nap_only))
+                                          and is_NO))
                     adapted = attempt[2]
                     if in_range and valid_schedule \
                        and ((adapted and count_adapted)

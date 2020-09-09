@@ -1,5 +1,5 @@
 from io_utility import read_json, write_json
-from schedules import get_schedule_dict, cut_modifier
+from schedules import get_schedule_dict, split_schedule
 from date_utility import get_now_string
 
 
@@ -20,7 +20,7 @@ def format_data(obj):
                 end = histo[i+1]['setAt']
             start = val['setAt']
             adapted = val['adapted']
-            schedule, modifier = cut_modifier(val['name'])
+            schedule, modifier = split_schedule(val['name'])
             new_obj[schedule][modifier].append([start, end, adapted])
     for sch in new_obj:
         for mod in new_obj[sch]:
