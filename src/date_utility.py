@@ -1,4 +1,15 @@
 import datetime
+from dateutil import rrule
+
+
+# https://stackoverflow.com/a/11324695/8040287
+def range_date(start, end):
+    """
+    return a list of date between start and end, included.
+    """
+    return list(rrule.rrule(rrule.DAILY,
+                            count=(end-start).days + 1,
+                            dtstart=start))
 
 
 def iso_to_datetime(iso_date):
