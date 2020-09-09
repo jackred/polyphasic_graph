@@ -25,7 +25,8 @@ def make_graph(data):
 
 
 def make_range_array(data, start_date='2017-05-07T00:15:38.541Z',
-                     end_date=get_now_string(), count_adapted=False):
+                     end_date=get_now_string(), count_adapted=True,
+                     count_attempted=True):
     """
     create an array of dictionnary. Each cell represent one day, starting from
     the start_date to the end_date. Dictionnary schema:
@@ -55,7 +56,8 @@ def make_range_array(data, start_date='2017-05-07T00:15:38.541Z',
                                           and is_nap_only))
                     adapted = attempt[2]
                     if in_range and valid_schedule \
-                       and (not(count_adapted) or adapted):
+                       and ((adapted and count_adapted)
+                            or (not(adapted) and count_attempted)):
                         first = max((start_at - start_dt).days, 0)
                         last = delta - max(0, (end_dt - end_at).days)
                         for j in range(first, last):
@@ -71,7 +73,8 @@ def main():
     main function for testing
     """
     data = read_json('../data/data_discord_format.json')
-    data_to_plot = make_range_array(data, count_adapted=False)
+    data_to_plot = make_range_array(data, count_adapted=True,
+                                    count_attempted=True)
     write_json(data_to_plot, name='../data/data_discord_to_plot.json')
     make_graph(data_to_plot)
 
