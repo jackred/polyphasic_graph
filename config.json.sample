@@ -1,4 +1,4 @@
 {
-  "url": "<URL>"
+  "url_report": "<URL>",
+  "url_report_discord": "<URL>"  
 }
-

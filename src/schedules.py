@@ -12,8 +12,12 @@ modifiers = ['shortened', 'extended', 'flipped', 'modified', 'recovery',
              'normal']
 
 
-def get_modifiers_list():
-    return {mod: [] for mod in modifiers}
+def get_modifiers_list(val):
+    """
+    generate a dictionnary. Schema:
+    {modifiers: value}
+    """
+    return {mod: val() for mod in modifiers}
 
 
 def get_schedule_list_2d():
@@ -28,13 +32,13 @@ def get_schedule_list_2d():
     ]))
 
 
-def get_schedule_dict():
+def get_schedule_dict(val):
     """
-    return a dictionary. Schedma:
-     {"schedule name": []}
+    return a dictionary. Schema:
+     {"schedule name": {modifiers: value}}
     """
     tmp_list = get_schedule_list_2d()
-    return {sch: get_modifiers_list() for sch in tmp_list}
+    return {sch: get_modifiers_list(val) for sch in tmp_list}
 
 
 def cut_modifier(schedule_name):

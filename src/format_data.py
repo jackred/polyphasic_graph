@@ -9,7 +9,7 @@ def format_data(obj):
     to a dictionary. Schedma:
      {"schedule name": [[start, end]]}
     """
-    new_obj = get_schedule_dict()
+    new_obj = get_schedule_dict(list)
     now = get_now_string()
     for entry in obj:
         histo = entry['historicSchedules']
@@ -18,17 +18,23 @@ def format_data(obj):
                 end = now
             else:
                 end = histo[i+1]['setAt']
-                start = val['setAt']
-                adapted = val['adapted']
-                schedule, modifier = cut_modifier(val['name'])
-                new_obj[schedule][modifier].append([start, end, adapted])
+            start = val['setAt']
+            adapted = val['adapted']
+            schedule, modifier = cut_modifier(val['name'])
+            new_obj[schedule][modifier].append([start, end, adapted])
+    for sch in new_obj:
+        for mod in new_obj[sch]:
+            new_obj[sch][mod].sort(key=lambda x: x[0])
     return new_obj
 
 
 def main():
-    data = read_json()
+    """
+    main function for testing
+    """
+    data = read_json('../data/data_discord.json')
     new_data = format_data(data)
-    write_json(new_data)
+    write_json(new_data, '../data/data_discord_format.json')
 
 
 if __name__ == '__main__':

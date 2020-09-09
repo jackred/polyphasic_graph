@@ -1,7 +1,7 @@
 import json
 
 
-def read_json(name='../data/data.json'):
+def read_json(name):
     """
     read the data from a json file and decode them
     """
@@ -12,7 +12,7 @@ def read_json(name='../data/data.json'):
     return obj
 
 
-def write_json(data, name='../data/data_format.json'):
+def write_json(data, name):
     """
     write the formatted json data inside a file
     """
