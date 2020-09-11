@@ -39,7 +39,9 @@ def main():
     main function for testing
     """
     data = get_json_report_discord()
+    data2 = get_json_report()
     write_json(data, '../data/data_discord.json')
+    write_json(data2, '../data/data.json')
 
 
 if __name__ == '__main__':

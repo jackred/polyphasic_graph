@@ -33,8 +33,11 @@ def main():
     main function for testing
     """
     data = read_json('../data/data_discord.json')
+    data2 = read_json('../data/data.json')
     new_data = format_data(data)
+    new_data2 = format_data(data2)
     write_json(new_data, '../data/data_discord_format.json')
+    write_json(new_data2, '../data/data_format.json')
 
 
 if __name__ == '__main__':
