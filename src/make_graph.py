@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
 from date_utility import get_now_string, iso_to_datetime, range_date
 from schedules import get_schedule_dict, is_nap_only
 from io_utility import read_json, write_json
